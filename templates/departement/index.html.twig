@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des départements{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        {% include "partials/new.with.access.html.twig" with {
+            entity_title: "départements",
+            new_title: "département",
+            path_new: path('departement_new')
+        } %}
+        
+        {% include "partials/notification.html.twig" %}
+        
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Lieu</th>
+                    <th>Contact</th>
+                    {% include "partials/thead.action.html.twig" %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for departement in departements %}
+                    <tr>
+                        <td>{{ departement.nomDepartement }}</td>
+                        <td>{{ departement.lieu }}</td>
+                        <td>{{ departement.contactDept }}</td>
+                        <td>
+                            {% include "partials/action.html.twig" with {
+                                path_edit: path('departement_edit', {'id': departement.id}),
+                                path_delete: path('departement_delete', {'id': departement.id})
+                            } %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="4">Aucun département</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

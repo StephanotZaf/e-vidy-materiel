@@ -1,0 +1,46 @@
+<nav
+	class="navbar navbar-expand-sm navbar-dark bg-dark">
+	<a class="navbar-brand" href="#"></a>
+	<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="collapsibleNavId">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			<li class="nav-item active">
+				<a class="nav-link" href="{{ path('sous_type_index') }}">Type matériel</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('categorie_index') }}">Materiel</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('departement_index') }}">Département</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('materiel_index') }}">Detail Matériel</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('cart_index') }}">Vos achats</a>
+			</li>
+			{% if app.user %}
+				{% for item in app.user.role %}
+					{% if item.nomRole == "ROLE_ADMIN" %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('user_index') }}">Utilisateur</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('role_index') }}">Rôle</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			{# <li class="nav-item">
+				<a class="nav-link" href="{{ path('client_index') }}">Achat</a>
+			</li> #}
+		</ul>
+
+		<form class="form-inline my-2 my-lg-0">
+			<a class="btn btn-info" href="{{ path('app_logout') }}">Déconnexion</a>
+		</form>
+	</div>
+</nav>

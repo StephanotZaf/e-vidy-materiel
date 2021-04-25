@@ -1,0 +1,8 @@
+<h3 class="text-center mt-3">Liste des {{ entity_title }}</h3>
+{% if app.user %}
+	{% for item in app.user.role %}
+		{% if item.nomRole == "ROLE_RESPONSABLE" %}
+			<a href="{{ path_new }}" class="btn btn-primary mb-2">Nouveau {{ new_title }}</a>
+		{% endif %}
+	{% endfor %}
+{% endif %}

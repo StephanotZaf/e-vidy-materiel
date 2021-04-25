@@ -1,0 +1,9 @@
+{% if app.user.role | length > 0 %}
+	{% for item in app.user.role %}
+		{% if item.nomRole == "ROLE_RESPONSABLE" %}
+			<th>Action</th>
+		{% endif %}
+	{% endfor %}
+{% else %}
+	<th></th>
+{% endif %}

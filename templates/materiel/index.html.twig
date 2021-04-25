@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail des matériels{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+         {% include "partials/new.with.access.html.twig" with {
+            entity_title: "détails matériels",
+            new_title: "détail matériel",
+            path_new: path('materiel_new')
+        } %}
+        
+        {% include "partials/notification.html.twig" %}
+        
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th class="text-center">Type matériel</th>
+                    {# <th class="text-center">Matériel</th> #}
+                    <th class="text-center">Type</th>
+                    <th class="text-center">Quantité</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Département</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                 {% for materiel in materiels %}
+                    <tr>
+                        <td>{{ materiel.designation }}</td>
+                        <td class="text-center">{{ materiel.categorie.sousType.descrSousType }}</td>
+                        {# <td class="text-center">{{ materiel.categorie.reference }}</td> #}
+                        <td class="text-center">{{ materiel.type }}</td>
+                        <td class="text-center">{{ materiel.qte }}</td>
+                        <td class="text-center">{{ materiel.prixUnitaire | number_format(0,'',' ')}} FMG</td>
+                        <td class="text-center">{{ materiel.departement}}</td>
+                        <td>
+                            <a href="{{ path('cart_add',{'id': materiel.id}) }}" class="btn btn-success">Acheter</a>
+                            {% include "partials/action.html.twig" with {
+                                path_edit: path('materiel_edit', {'id': materiel.id}),
+                                path_delete: path('materiel_delete', {'id': materiel.id})
+                            } %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="8">Aucun matériel</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

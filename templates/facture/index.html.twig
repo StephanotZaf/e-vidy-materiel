@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des factures{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-3">Liste des factures</h3>
+        <a href="{{ path('facture_new') }}" class="btn btn-primary mb-2">Nouveau facture</a>
+        {% include "partials/notification.html.twig" %}
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Facture</th>
+                    <th>Matériel</th>
+                    <th>Client</th>
+                    <th class="text-center">Quantité acheté</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Date du facturation</th>
+                    <th class="text-center">Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for facture in factures %}
+                    <tr>
+                        <td>{{ facture.lengthId }}</td>
+                        <td>{{ facture.materiel.designation }}</td>
+                        <td>{{ facture.client.fullName }}</td>
+                        <td class="text-center">{{ facture.client.qteAchete }}</td>
+                        <td class="text-center">{{ facture.materiel.prixUnitaire | number_format(0,'',' ')}} Ar</td>
+                        <td class="text-center">{{ facture.dateFacture | date('d/m/Y')}}</td>
+                        <td class="text-center">{{ (facture.client.qteAchete * facture.materiel.prixUnitaire) | number_format(0,'',' ') }} Ar</td>
+                        <td>
+                            <a href="{{ path('facture_edit', {'id': facture.id}) }}" class="btn btn-info">Editer</a>
+                            <a href="{{ path('facture_delete', {'id': facture.id}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="4">Aucun facture</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

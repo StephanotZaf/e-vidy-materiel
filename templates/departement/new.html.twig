@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Departement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-2">Enregistrement d'un département</h3>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">Enregistrer</button>
+            <a href="{{ path('departement_index') }}" class="btn btn-warning">Retourner</a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

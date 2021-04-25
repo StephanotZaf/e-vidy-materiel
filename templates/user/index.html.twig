@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		{% if app.user.role %}
+			{% for item in app.user.role %}
+				{% if item.nomRole == "ROLE_ADMIN" %}
+					<h3 class="text-center mt-3">Liste des utilisateurs</h3>
+					{% include "partials/notification.html.twig" %}
+					<table class="table" id="example">
+						<thead>
+							<tr>
+								<th>Email</th>
+								<th>Role</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for user in users %}
+								<tr>
+									<td>{{ user.email }}</td>
+									<td>
+										{% for role in user.role %}
+											{{ role.nomRoleFormatted |title }}
+										{% endfor %}
+									</td>
+									<td>
+										<a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-info">Editer</a>
+										<a href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-danger">Supprimer</a>
+									</td>
+								</tr>
+							{% else %}
+								<tr align="center">
+									<td colspan="2">Aucun utilisateur</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	{% include "partials/footer.html.twig" %}
+{% endblock %}

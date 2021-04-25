@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des clients{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-3">Liste des clients</h3>
+        <a href="{{ path('client_new') }}" class="btn btn-primary mb-2">Nouveau</a>
+        {% include "partials/notification.html.twig" %}
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Prenom</th>
+                    <th>Type paiement</th>
+                    <th>Matériel</th>
+                    <th class="text-center">Qté acheté</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>{{ client.nomCli }}</td>
+                        <td>{{ client.TypePaiement }}</td>
+                        <td>{{ client.materiel.designation }}</td>
+                        {# {% set qte = 5 %} #}
+                        <td class="text-center">{{ client.qteAchete }}</td>
+                        <td class="text-center">{{ client.materiel.prixUnitaire | number_format(0,'',' ') }} FMG</td>
+                        <td class="text-center">{{ (client.qteAchete * client.materiel.prixUnitaire) | number_format(0,'',' ') }} FMG</td>
+                        <td>
+                            <a href="{{ path('client_show', {'code': client.code}) }}" class="btn btn-info">Voir</a>
+                            <a href="{{ path('client_edit', {'id': client.id}) }}" class="btn btn-info">Editer</a>
+                            {% for role in app.user.role %}
+                                {% if role.nomRole == "ROLE_ADMIN" %}
+                                    <a href="{{ path('client_delete', {'id': client.id}) }}" class="btn btn-danger">Supprimer</a>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="5">Aucun client</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

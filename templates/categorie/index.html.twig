@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des matériels{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        {% include "partials/new.with.access.html.twig" with {
+            entity_title: "matériels",
+            new_title: "matériel",
+            path_new: path('categorie_new')
+        } %}
+
+        {% include "partials/notification.html.twig" %}
+
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Nom du fournisuer</th>
+                    <th>Nom/Marque</th>
+                    <th>Type matériel</th>
+                    {% include "partials/thead.action.html.twig" %}
+                </tr>
+            </thead>
+            <tbody>
+               {% for categorie in categories %}
+                    <tr>
+                        <td>{{ categorie.reference }}</td>
+                        <td>{{ categorie.descriptionCateg }}</td>
+                        <td>{{ categorie.sousType.descrSousType }}</td>
+                        <td>
+                            {% include "partials/action.html.twig" with {
+                                path_edit: path('categorie_edit', {'id': categorie.id}),
+                                path_delete: path('categorie_delete', {'id': categorie.id})
+                            } %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="3">Aucun matériel</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

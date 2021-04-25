@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modif Departement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-2">Modification d'un département</h3>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success">Modifier</button>
+            <a href="{{ path('departement_index') }}" class="btn btn-warning">Retourner</a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

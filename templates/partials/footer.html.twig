@@ -1,0 +1,21 @@
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/all.min.js') }}"></script>
+<script src="/js/htm2pdf.bundlemin.js"></script>
+<script src="/js/script.js"></script>
+<script src="{{ asset('table/datatables.min.js') }}"></script>
+ 
+<script>
+    $(function(){ 
+        setTimeout(() => {
+             $('.alert').hide();
+        }, 3000);
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            language: 'fr'
+        });
+        $("#departement_contactDept").removeAttr("required");
+    } );
+  </script>

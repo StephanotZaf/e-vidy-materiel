@@ -1,0 +1,8 @@
+{% if app.user %}
+	{% for item in app.user.role %}
+		{% if item.nomRole == "ROLE_RESPONSABLE" %}
+			<a href="{{ path_edit }}" class="btn btn-info">Editer</a>
+			<a href="{{ path_delete }}" class="btn btn-danger">Supprimer</a>
+		{% endif %}
+	{% endfor %}
+{% endif %}

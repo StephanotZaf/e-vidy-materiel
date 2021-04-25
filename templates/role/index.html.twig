@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des roles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		{% if app.user.role %}
+			{% for item in app.user.role %}
+				{% if item.nomRole == "ROLE_ADMIN" %}
+
+					{% include "partials/new.with.access.html.twig" with {
+						entity_title: "rôles",
+						new_title: "rôle",
+						path_new: path('role_new')
+					} %}
+
+					<table class="table table-striped" id="example">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								{% include "partials/thead.action.html.twig" %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for role in roles %}
+								<tr>
+									<td>{{ role.nomRoleFormatted | title }}</td>
+									<td>
+										{% include "partials/action.html.twig" with {
+									path_edit: path('role_edit', {'id': role.id}),
+									path_delete: path('role_delete', {'id': role.id})
+								} %}
+									</td>
+								</tr>
+							{% else %}
+								<tr align="center">
+									<td colspan="2">Aucun role</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	{% include "partials/footer.html.twig" %}
+{% endblock %}

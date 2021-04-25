@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Matériel{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-2">Enregistrement détail d'un matériel</h3>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="mb-3">
+                <button class="btn btn-primary">Enregistrer</button>
+                <a href="{{ path('materiel_index') }}" class="btn btn-warning">Retourner</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

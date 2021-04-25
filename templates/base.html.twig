@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link  rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+            <link  rel="stylesheet" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="/table/datatables.min.css">
+        {% endblock %}
+    </head>
+    <body>
+        {% if app.user %}
+            {% include "partials/header.html.twig" %}
+        {% endif %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

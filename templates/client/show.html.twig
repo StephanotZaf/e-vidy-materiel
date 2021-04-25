@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    
+        <div class="facturation"> 
+        
+                <div class="facturation__client">
+					<h4 class="text-center">DAGOTRUCK</h4>
+        <p>Dagotruck@gmail.com</p>
+        <p>034 02 143 61/034 20 747 91</p>
+        <p>Vente piece &  occasions et neuves</p>
+        <span style="text-align: right;">
+						{{ client.fullName }} </span>
+					<span style="text-align: right;">
+						{{ client.contact }}</span>
+				</div>
+				<div class="facturation__info" style="marging-right: 80%">
+					
+                        
+				</div>
+                
+			</div>
+            <div>
+					<span>FAC-{{ client.id }}</span><br>
+					<span>Type : {{ client.status }}</span><br>
+					<span>Date d'achat : {{ client.dateAchat | date('d/m/Y')}}</span><br>
+                    {% if client.avance != 0 %}
+					    <span>Avance : {{ client.avance | number_format(0,'',' ')}} FMG</span><br>
+					    <span>Date déchéance : {{ client.dateDecheance | date('d/m/Y')}}</span><br>
+                        <span>Reste : {% set reste = 0 %}
+                        {% for achat in achats %}
+                            {% set reste = (achat.qteAchete * achat.materiel.prixUnitaire) - client.avance %}
+                        {% endfor %}
+                        {{ reste | number_format(0,'',' ') }} FMG</span><br>
+                    {% endif %}
+                        <span>Réference : {{ client.materiel.designation }}</span><br>
+                        <span>Sous-Type : {{ client.materiel.categorie.sousType }}</span><br>
+                        <span>Type : {{ client.materiel.type }}</span><br>
+				</div>
+         
+         <table class="table table-striped table-light" style=" width: 35%; height: 100%;">
+            <thead>
+             
+                <tr>
+                    
+                   
+                    
+                    <th>Marque</th>
+                    
+                    <th class="text-center">Qté acheté</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Total</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                    {% for client in achats %}
+                    <tr>
+                        
+                        
+                        <td class="text-center">{{ client.materiel.categorie.descriptionCateg }}</td>
+                        
+                        
+                        {# {% set qte = 5 %} #}
+                        <td class="text-center">{{ client.qteAchete }}</td>
+                        <td class="text-center">{{ client.materiel.prixUnitaire | number_format(0,'',' ') }} FMG</td>
+                        <td class="text-center">{{ (client.qteAchete * client.materiel.prixUnitaire) | number_format(0,'',' ') }} FMG</td>
+                        
+                    </tr>
+                    {% else %}
+                    <tr align="center">
+                        <td colspan="5">Aucun client</td>
+                    </tr>
+                {% endfor %}
+                  
+               
+            </tbody>
+            <tfoot>
+            <tr>
+
+                <td colspan="3" class="text-right" >Total :</td>
+                <td>
+                    {% set somme = 0 %}
+                    {% for achat in achats %}
+                        {% set somme = somme + (achat.qteAchete * achat.materiel.prixUnitaire) %}
+                    {% endfor %}
+                    {{ somme | number_format(0,'',' ') }} FMG
+                </td>
+                <td></td>
+            </tr>
+        </tfoot>
+        </table>
+        
+        
+        {# {% for client in it %}
+    <p>{{ total }}</p>
+{% endfor %} #}
+        <br><br><a href="" onclick='window.print();'><img src="/img/facture.png" width="30px"></a><br>
+
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

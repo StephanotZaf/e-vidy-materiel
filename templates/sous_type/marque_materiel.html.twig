@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les matériels par marque
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h3 class="text-center mt-3">Liste des matériels</h3>
+		{% if marques | length > 0 %}
+			<div class="row">
+				{% for marque in marques %}
+					<div class="col-sm-4">
+						<div class="card">
+							<h5 class="card-header bg-info text-white text-center">Marque
+								{{ marque.description_categ }}</h5>
+							<div class="card-body">
+								<p>Réference :
+									{{ marque.designation }}</p>
+								<p>Nom/Marque :
+									{{ marque.description_categ }}</p>
+								{# <p>Matériel :
+									{{ marque.reference }}</p> #}
+								<p>Type :
+									{{ marque.type }}</p>
+								<p>Quantité :
+									{{ marque.qte }}</p>
+								<p>Prix unitaire :
+									{{ marque.prix_unitaire | number_format(0,'',' ') }}
+									FMG</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div>
+				<h4 class="text-center text-white bg-info p-5">Aucun matériel ne correspond à ce marque</h4>
+			</div>
+		{% endif %}
+	</div>
+	{% include "partials/footer.html.twig" %}
+{% endblock %}

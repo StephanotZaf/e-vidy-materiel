@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des matériels entrées{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="text-center mt-3">Liste des matériels entrées</h3>
+        <a href="{{ path('materiel_entree_new') }}" class="btn btn-primary mb-2">Nouveau matériel entrée</a>
+        {% include "partials/notification.html.twig" %}
+        <table class="table" id="example">
+            <thead>
+                <tr>
+                    <th>Matériel</th>
+                    <th class="text-center">Quantité entrée</th>
+                    <th class="text-center">Date d'entree</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for materiel_entree in materiel_entrees %}
+                    <tr>
+                        <td>{{ materiel_entree.materiel.designation }}</td>
+                        <td class="text-center">{{ materiel_entree.qteEntree }}</td>
+                        <td class="text-center">{{ materiel_entree.dateEntree ? materiel_entree.dateEntree|date('d/m/Y') : '' }}</td>
+                        <td>
+                            <a href="{{ path('materiel_entree_edit', {'id': materiel_entree.id}) }}" class="btn btn-info">Editer</a>
+                            <a href="{{ path('materiel_entree_delete', {'id': materiel_entree.id}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr align="center">
+                        <td colspan="4">Aucun matériel entrée</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

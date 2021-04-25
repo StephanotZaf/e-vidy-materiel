@@ -1,0 +1,7 @@
+{% for label, messages in app.flashes %}
+    <div class="alert bg-{{ label }} text-white">
+        {% for message in messages %}
+            <i class="fas fa-{% if label == "success" %}check{% else %}window-close{% endif %}"></i> {{ message }}
+        {% endfor %}
+    </div>
+{% endfor %}

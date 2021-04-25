@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title "Liste type matériel" %}
+
+{% block body %}
+	<div class="container">
+
+		{% include "partials/new.with.access.html.twig" with {
+            entity_title: "types de matériels",
+			new_title: "type de matériel",
+            path_new: path('sous_type_new')
+        } %}
+
+		{% include "partials/notification.html.twig" %}
+
+		<table class="table" id="example">
+			<thead>
+				<tr>
+					<th>Description</th>
+                    {% include "partials/thead.action.html.twig" %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for sous_type in sous_types %}
+					<tr>
+						<td><a href="{{ path('materiel_marque',{'marque_id': sous_type.id}) }}" style="color:#000;text-decoration:none;">{{ sous_type.descrSousType }}</a></td>
+						<td>
+							{% include "partials/action.html.twig" with {
+								path_edit: path('sous_type_edit', {'id': sous_type.id}),
+								path_delete: path('sous_type_delete', {'id': sous_type.id})
+							} %}
+						</td>
+					</tr>
+				{% else %}
+					<tr align="center">
+						<td colspan="2">Aucun type matériel</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% include "partials/footer.html.twig" %}
+{% endblock %}
