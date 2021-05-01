@@ -1,22 +1,22 @@
-Il y a 3 rôle
+* Il y a 3 rôle
 - ROLE_USER
 - ROLE_RESPONSABLE
 - ROLE_ADMIN
 
-# ROLE_USER
+## ROLE_USER
 - Voir type de matériel
 - Voir matériel
 - Voir département
 - Voir détail matériel
 - Faire des achats
 
-# ROLE_RESPONSABLE
+## ROLE_RESPONSABLE
 - Gérer type de matériel
 - Gérer matériel
 - Gérer département
 - Gérer détail matériel
 
-# ROLE_ADMIN
+## ROLE_ADMIN
 - Gérer type de matériel
 - Gérer matériel
 - Gérer département

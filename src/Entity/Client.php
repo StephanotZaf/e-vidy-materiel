@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping\PrePersist;
@@ -72,9 +73,7 @@ class Client
     private $code;
 
     /**
-     * @ORM\Column(type="date")
-     * @Assert\Date
-     * @var string A "Y-m-d" formatted value
+     * @ORM\Column(type="datetime")
      */
     private $dateAchat;
 
@@ -253,7 +252,7 @@ class Client
         return $this;
     }
 
-    public function getDateDecheance(): ?\DateTimeInterface
+    public function getDateDecheance()
     {
         return $this->dateDecheance;
     }

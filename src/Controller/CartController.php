@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Service\CartService;
 use App\Repository\MaterielRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,14 +18,17 @@ class CartController extends AbstractController
     private $session;
     private $cartService;
     private $materielRepository;
+    private $manager;
 
     public function __construct(SessionInterface $session,
                                 CartService $cartService,
-                                MaterielRepository $materielRepository)
+                                MaterielRepository $materielRepository,
+                                EntityManagerInterface $manager)
     {
         $this->session = $session;
         $this->cartService = $cartService;
         $this->materielRepository = $materielRepository;
+        $this->manager = $manager;
     }
     
 
@@ -41,13 +46,41 @@ class CartController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/cart/valid", name="cart_valid_purchase")
-    //  */
-    // public function validPurchase(Request $request): Response
-    // {
-    //     return $this->json($this->cartService->getFullCart(),201,[],['groups' => "materiel_read"]);
-    // }
+    /**
+     * @Route("/cart/valid", name="cart_valid_purchase")
+     */
+    public function validPurchase(Request $request)
+    {
+        //    dd($request->request->all());
+
+        $quantities = $request->request->get("quantity");
+        $materiel_id = $request->request->get("materiel_id");
+        $nom = $request->request->get("nom");
+
+        // dd($nom);
+
+        $client = new Client();
+
+        for ($m=0; $m < count($materiel_id); $m++) { 
+            $materiel = $this->materielRepository->find($materiel_id[$m]);
+            $client->setMateriel($materiel);
+            $this->manager->persist($materiel);
+
+        }
+        
+        for ($q=0; $q < count($quantities); $q++) { 
+            $client->setQteAchete($quantities[$q]);
+        }
+
+        for ($n=0; $n < count($nom); $n++) { 
+            $client->setNomCli($nom[$n]);
+        }
+
+        $this->manager->persist($client);
+        dd($client);
+
+        // $this->manager->flush();
+    }
 
     /**
      * @Route("/cart/add/{id}", name="cart_add")

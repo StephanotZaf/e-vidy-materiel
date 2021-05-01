@@ -24,10 +24,32 @@
                             </div>
                         </div>
                     </div>
+
                 {% endfor %}
+                
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Matériel</th>
+                                <th>Quantité</th>
+                                <th>Nom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td contenteditable="true" class="materiel" name="materiel_id">{{ item.materiel.id }}</td>
+                                    <td contenteditable="true" class="quantity" name="quantity">{{ item.quantity }}</td>
+                                    <td contenteditable="true" class="nom" name="nom"></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
             </div>
+            <input type="text" class="client_name form-control">
             <div class="d-flex justify-content-center">
                 {# <a href="{{ path('cart_valid_purchase') }}" class="btn btn-success m-2">Valider</a> #}
+                <button type="button" name="save" id="save" class="btn btn-success m-2">Valider</button>
             </div>
         {% else %}
             <div class="d-flex justify-content-center bg-info p-4 mt-4">
@@ -36,5 +58,43 @@
         {% endif %}
 	</div>
     {% include "partials/footer.html.twig" %}
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $(document).on("input",".client_name",function(e) { 
+                $("td[name=nom]").text(e.target.value);
+            });
+
+            var url = "{{ path('cart_valid_purchase') }}";
+            $("#save").click(function (e) { 
+                e.preventDefault();
+                var materiel_id = [];
+                var quantity = [];
+                var nom = [];
+
+                $(".materiel").each(function () {
+                    materiel_id.push($(this).text());
+                }); 
+
+                $(".quantity").each(function () {
+                    quantity.push($(this).text());
+                }); 
+
+                $(".nom").each(function () {
+                    nom.push($(this).text());
+                }); 
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {materiel_id:materiel_id,quantity:quantity,nom:nom},
+                    success: function (data){
+                        // console.log(materiel_id);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
